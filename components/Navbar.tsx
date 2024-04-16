@@ -17,7 +17,7 @@ const Navbar = async () => {
               <MobileNav data={categories} />
 
               <div className="flex lg:ml-0 items-center justify-center">
-                <Link href="/" className="font-bold text-2xl">
+                <Link href="/" className="font-bold text-lg sm:text-2xl">
                   Store Name
                 </Link>
               </div>

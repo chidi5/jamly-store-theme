@@ -9,7 +9,7 @@ const Home = async () => {
     isFeatured: true,
     categoryId: "",
   });
-  const billboard = await getBillboard("f74c5201-c7d7-4f82-9251-474b72a8c355");
+  const billboard = await getBillboard("8947471c-b5ab-4fc4-99fe-f77362b728e4");
   return (
     <>
       <section className="p-0 pb-10 space-y-10">
