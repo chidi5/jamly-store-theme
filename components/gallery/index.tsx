@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import { Tab } from "@headlessui/react";
 import { Image as ImageType } from "@/types";
+import { Tab } from "@headlessui/react";
 import Image from "next/image";
 import GalleryTab from "./gallery-tab";
 

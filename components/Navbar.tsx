@@ -1,12 +1,13 @@
-import getCategories from "@/actions/get-categories";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import NavItems from "@/components/NavItems";
 import Link from "next/link";
 import Cart from "./Cart";
 import MobileNav from "./MobileNav";
+import { getCategories } from "@/lib/queries";
+import { Store } from "@/types";
 
-const Navbar = async () => {
-  const categories = await getCategories();
+const Navbar = async ({ store }: { store: Store }) => {
+  const categories = await getCategories(store.id);
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-20">
@@ -18,7 +19,7 @@ const Navbar = async () => {
 
               <div className="flex lg:ml-0 items-center justify-center">
                 <Link href="/" className="font-bold text-lg sm:text-2xl">
-                  Store Name
+                  {store.name ? store.name : "My Store"}
                 </Link>
               </div>
 

@@ -43,3 +43,19 @@ export type OptionValue = {
   value: string;
   option: Option[];
 };
+
+export type Store = {
+  id: string;
+  name: string;
+  storeLogo: string;
+  companyEmail: string;
+  companyPhone: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  state: string;
+  country: string;
+  billboards: Billboard;
+  categories: Category;
+  products: Product;
+};

@@ -20,11 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("relative h-full antialiased", urbanist.className)}>
-        <main className="relative flex flex-col min-h-screen">
-          <Navbar />
-          <div className="flex-grow flex-1">{children}</div>
-          <Footer />
-        </main>
+        <div>{children}</div>
       </body>
     </html>
   );
