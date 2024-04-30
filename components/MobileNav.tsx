@@ -68,8 +68,8 @@ const MobileNav = ({ data }: MobileNavProps) => {
             <div className="mt-2">
               <ul>
                 {data.map((category) => (
-                  <Link href={`/category/${category.id}`}>
-                    <li key={category.id} className="space-y-1 px-4">
+                  <Link key={category.id} href={`/category/${category.id}`}>
+                    <li className="space-y-1 px-4">
                       <div className="border-b border-gray-200">
                         <div className="-mb-px flex">
                           <p className="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 py-4 text-base font-medium">
