@@ -8,12 +8,12 @@ import Link from "next/link";
 
 const Home = async () => {
   return (
-    <MaxWidthWrapper className=" max-w-screen-2xl">
-      <section className="my-20 rounded-xl transform bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(152,245,249,.5)_100%)]">
-        <div className="py-48 px-12 text-center space-y-8">
+    <MaxWidthWrapper className=" max-w-screen-xl">
+      <section className="mt-28 rounded-xl transform bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(152,245,249,.5)_100%)]">
+        <div className="py-28 px-12 text-center space-y-8">
           <Link
             href={"#"}
-            className="text-2xl lg:text-3xl text-gray-600 font-bold inline-flex hover:text-gray-700 items-center gap-2"
+            className="text-2xl lg:text-xl text-gray-600 font-bold inline-flex hover:text-gray-700 items-center"
           >
             <ArrowLeft size="25" />
             <span>create a store @ Jamly.</span>

@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body,
-:root {
-  height: 100%;
-}
-
 .parallax {
   min-height: 320px;
   /* Create the parallax scrolling effect */
