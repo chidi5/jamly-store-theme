@@ -52,7 +52,10 @@ const ProductCard = ({ data }: ProductCardProps) => {
             {data.name}
           </h5>
         </Link>
-        <Currency value={data?.variants?.[0]?.price} className="text-lg" />
+        <Currency
+          value={data?.variants?.[0]?.price}
+          className="text-sm md:text-lg"
+        />
       </div>
     </div>
   );

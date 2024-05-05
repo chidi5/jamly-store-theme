@@ -12,7 +12,7 @@ const ProductList = ({ title, items }: ProductListProps) => {
     <div className="space-y-4">
       <h3 className="font-bold text-3xl">{title}</h3>
       {items.length === 0 && <NoResult />}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-1">
         {items.map((item) => (
           <ProductCard key={item.id} data={item} />
         ))}
