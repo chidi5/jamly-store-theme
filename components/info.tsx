@@ -10,7 +10,7 @@ type InfoProps = {
   data: Product;
 };
 
-const info = ({ data }: InfoProps) => {
+const Info = ({ data }: InfoProps) => {
   const allVariantOptions = data.variants?.map((variant) => {
     const allOptions: { [key: string]: any } = {};
 
@@ -93,4 +93,4 @@ const info = ({ data }: InfoProps) => {
   );
 };
 
-export default info;
+export default Info;
