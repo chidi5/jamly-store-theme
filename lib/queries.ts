@@ -23,6 +23,15 @@ export const getCategories = async (id: string): Promise<Category[]> => {
   return res.json();
 };
 
+export const getCategory = async (
+  id: string,
+  storeId: string
+): Promise<Category> => {
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/${storeId}/categories`;
+  const res = await fetch(`${URL}/${id}`, { next: { revalidate: 0 } });
+  return res.json();
+};
+
 export const getBillboard = async (
   id: string,
   storeId: string

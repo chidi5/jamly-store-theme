@@ -17,6 +17,7 @@ export type Product = {
   price: string;
   isFeatured: boolean;
   images: Image[];
+  options: Option[];
   variants: Variant[];
 };
 
@@ -30,18 +31,19 @@ export type Variant = {
   title: string;
   price: string;
   inventory: string;
-  selectedOption: OptionValue[];
+  selectedOptions: OptionValue[];
 };
 
 export type Option = {
   id: string;
   name: string;
+  values: OptionValue[];
 };
 
 export type OptionValue = {
   id: string;
   value: string;
-  option: Option[];
+  option: Option;
 };
 
 export type Store = {

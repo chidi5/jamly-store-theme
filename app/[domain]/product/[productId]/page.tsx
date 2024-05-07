@@ -1,5 +1,6 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Gallery from "@/components/gallery";
+import GalleryCarousel from "@/components/image-carousel";
 import Info from "@/components/info";
 import ProductList from "@/components/product-list";
 import { getProduct, getProducts } from "@/lib/queries";
@@ -17,9 +18,10 @@ const Productpage = async ({
   return (
     <div className="bg-white">
       <MaxWidthWrapper className="py-10">
-        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-4">
-          <div className="m-0 p-0">
-            <Gallery images={product.images} />
+        <div className="lg:grid lg:grid-cols-3 lg:items-start lg:gap-x-4">
+          <div className="m-0 p-0 col-span-2">
+            <Gallery images={product.images} className="hidden sm:flex" />
+            <GalleryCarousel images={product.images} className="sm:hidden" />
           </div>
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
             <Info data={product} />

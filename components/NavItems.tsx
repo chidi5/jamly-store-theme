@@ -24,7 +24,7 @@ const NavItems = ({ data }: NavItemsProps) => {
           key={route.href}
           href={route.href}
           className={cn(
-            "text-lg font-medium transition-colors hover:text-black",
+            "text-base font-medium transition-colors hover:text-black",
             route.active ? "text-black" : "text-muted-foreground"
           )}
         >

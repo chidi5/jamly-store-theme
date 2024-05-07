@@ -47,7 +47,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
         </div>
       </div>
       <div>
-        <Link href="#">
+        <Link href={`/product/${data.id}`}>
           <h5 className="mb-2 text-base font-semibold tracking-tight group-hover:underline">
             {data.name}
           </h5>
