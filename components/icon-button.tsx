@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 type IconButtonProps = {
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   icon: React.ReactElement;
-  className: string;
+  className?: string;
 };
 
 const iconButton = ({ onClick, icon, className }: IconButtonProps) => {

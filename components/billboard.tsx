@@ -24,7 +24,7 @@ const Billboard = ({ data }: BillboardProps) => {
             style={{ backgroundImage: `url(${billboard?.imageUrl})` }}
           >
             <div className="w-full h-full gap-y-8 text-center flex flex-col items-center justify-center">
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight sm:max-w-4xl max-w-xs text-white">
+              <h1 className="text-2xl sm:text-5xl lg:text-7xl font-semibold tracking-tight sm:max-w-5xl max-w-xs text-white px-1">
                 {billboard.label}
               </h1>
             </div>

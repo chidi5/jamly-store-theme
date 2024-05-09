@@ -1,9 +1,8 @@
+import { cn } from "@/lib/utils";
+import ModalProvider from "@/providers/modal-provider";
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -20,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("relative h-full antialiased", urbanist.className)}>
+        <ModalProvider />
         <div>{children}</div>
       </body>
     </html>

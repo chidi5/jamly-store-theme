@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 type GalleryProps = {
   images: ImageType[];
-  className: string;
+  className?: string;
 };
 
 const Gallery = ({ images, className }: GalleryProps) => {
