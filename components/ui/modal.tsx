@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   };
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>
-      <DialogContent className="sm:!max-w-3xl">
+      <DialogContent className="!max-w-3xl">
         <div>{children}</div>
       </DialogContent>
     </Dialog>
