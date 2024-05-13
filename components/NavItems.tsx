@@ -13,9 +13,9 @@ type NavItemsProps = {
 const NavItems = ({ data }: NavItemsProps) => {
   const pathName = usePathname();
   const routes = data.map((route) => ({
-    href: `/category/${route.id}`,
+    href: `/category/${route.handle}`,
     label: route.name,
-    active: pathName === `/category/${route.id}`,
+    active: pathName === `/category/${route.handle}`,
   }));
   return (
     <nav className="flex gap-6 items-center">

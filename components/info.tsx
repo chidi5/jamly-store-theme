@@ -5,12 +5,16 @@ import React, { useState } from "react";
 import Currency from "./currency";
 import ProductOptions from "./product-option";
 import { Button } from "./ui/button";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { cn } from "@/lib/utils";
 
 type InfoProps = {
   data: Product;
+  n?: boolean;
 };
 
-const Info = ({ data }: InfoProps) => {
+const Info = ({ data, n }: InfoProps) => {
   const allVariantOptions = data.variants?.map((variant) => {
     const allOptions: { [key: string]: any } = {};
 
@@ -88,6 +92,16 @@ const Info = ({ data }: InfoProps) => {
             ? "Add to Cart"
             : "Sold Out"}
         </Button>
+      </div>
+      <div className="mt-4 text-left">
+        <Markdown
+          className={cn(
+            "prose text-sm text-muted-foreground",
+            n ? "line-clamp-1" : "line-clamp-none"
+          )}
+        >
+          {data.description}
+        </Markdown>
       </div>
     </div>
   );

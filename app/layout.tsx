@@ -3,6 +3,7 @@ import ModalProvider from "@/providers/modal-provider";
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={cn("relative h-full antialiased", urbanist.className)}>
         <ModalProvider />
         <div>{children}</div>
+        <Toaster />
       </body>
     </html>
   );

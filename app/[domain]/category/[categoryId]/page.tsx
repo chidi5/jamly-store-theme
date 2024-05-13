@@ -12,12 +12,13 @@ type CategoryPageProps = {
 };
 
 const CategoryPage = async ({ params }: CategoryPageProps) => {
+  const category = await getCategory(params.categoryId, params.domain);
+
   const products = await getProducts(params.domain, {
-    categoryId: params.categoryId,
+    categoryId: category.id,
     isFeatured: true,
   });
 
-  const category = await getCategory(params.categoryId, params.domain);
   return (
     <MaxWidthWrapper>
       <div className="my-10">

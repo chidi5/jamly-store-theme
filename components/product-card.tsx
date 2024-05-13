@@ -19,7 +19,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/product/${data?.id}`);
+    router.push(`/product/${data?.handle}`);
   };
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -53,7 +53,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
         </div>
       </div>
       <div>
-        <Link href={`/product/${data.id}`}>
+        <Link href={`/product/${data.handle}`}>
           <h5 className="mb-2 text-base font-semibold tracking-tight group-hover:underline">
             {data.name}
           </h5>
