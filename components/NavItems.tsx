@@ -8,9 +8,10 @@ import React from "react";
 
 type NavItemsProps = {
   data: Category[];
+  className?: string;
 };
 
-const NavItems = ({ data }: NavItemsProps) => {
+const NavItems = ({ data, className }: NavItemsProps) => {
   const pathName = usePathname();
   const routes = data.map((route) => ({
     href: `/category/${route.handle}`,
@@ -18,18 +19,20 @@ const NavItems = ({ data }: NavItemsProps) => {
     active: pathName === `/category/${route.handle}`,
   }));
   return (
-    <nav className="flex gap-6 items-center">
+    <nav className={cn("flex gap-6 items-center", className)}>
       {routes.map((route) => (
-        <Link
-          key={route.href}
-          href={route.href}
-          className={cn(
-            "text-base font-medium transition-colors hover:text-black",
-            route.active ? "text-black" : "text-muted-foreground"
-          )}
-        >
-          {route.label}
-        </Link>
+        <li className="list-none">
+          <Link
+            key={route.href}
+            href={route.href}
+            className={cn(
+              "text-base font-medium transition-colors hover:text-black",
+              route.active ? "text-black" : "text-muted-foreground"
+            )}
+          >
+            {route.label}
+          </Link>
+        </li>
       ))}
     </nav>
   );

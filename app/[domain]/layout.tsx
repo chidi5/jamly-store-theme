@@ -19,7 +19,7 @@ const Layout = async ({
     <main className="relative flex flex-col min-h-screen">
       <Navbar store={store} />
       <div className="flex-grow flex-1">{children}</div>
-      <Footer />
+      <Footer store={store} />
     </main>
   );
 };
