@@ -3,7 +3,7 @@
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { buttonVariants } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
@@ -17,10 +17,16 @@ import {
 } from "./ui/sheet";
 import useCart from "@/hooks/use-cart";
 import CartItems from "./cart-items";
+import Currency from "./currency";
 
 const Cart = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const cart = useCart();
+  const items = useCart((state) => state.items);
+
+  const totalPrice = items.reduce((total, item) => {
+    return total + Number(item.variantPrice);
+  }, 0);
 
   const itemCount = cart.items.length;
 
@@ -44,13 +50,13 @@ const Cart = () => {
           <SheetTitle>Cart ({itemCount})</SheetTitle>
         </SheetHeader>
         {itemCount > 0 ? (
-          <>
+          <div className="flex flex-col h-full">
             <div className="flex w-full flex-col pr-6">
-              <ScrollArea>
+              <div className="h-full overflow-y-scroll no-scrollbar">
                 <CartItems />
-              </ScrollArea>
+              </div>
             </div>
-            <div className="space-y-4 pr-6">
+            <div className="flex flex-col mt-auto justify-end space-y-4 pr-6">
               <Separator />
               <div className="space-y-1.5 text-sm">
                 <div className="flex">
@@ -58,12 +64,10 @@ const Cart = () => {
                   <span>Free</span>
                 </div>
                 <div className="flex">
-                  <span className="flex-1">Transaction Fee</span>
-                  <span>10</span>
-                </div>
-                <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>100</span>
+                  <span>
+                    <Currency value={totalPrice} />
+                  </span>
                 </div>
               </div>
 
@@ -80,7 +84,7 @@ const Cart = () => {
                 </SheetTrigger>
               </SheetFooter>
             </div>
-          </>
+          </div>
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
             <div

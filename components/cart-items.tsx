@@ -2,9 +2,11 @@ import useCart from "@/hooks/use-cart";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
+import Currency from "./currency";
 
 const CartItems = () => {
   const cart = useCart();
+
   return (
     <div className="mt-8">
       <div className="flow-root">
@@ -25,7 +27,9 @@ const CartItems = () => {
                     <h3>
                       <Link href={product.handle}>{product.name}</Link>
                     </h3>
-                    <p className="ml-4">{product.variantPrice}</p>
+                    <p className="ml-4">
+                      <Currency value={product.variantPrice} />
+                    </p>
                   </div>
                   <p className="mt-1 text-sm text-gray-500">
                     {product.variantTitle}

@@ -10,7 +10,7 @@ const formatter = new Intl.NumberFormat("en-NG", {
 
 type CurrencyProps = {
   value: string | number;
-  className: string;
+  className?: string;
 };
 
 const Currency = ({ value, className }: CurrencyProps) => {
