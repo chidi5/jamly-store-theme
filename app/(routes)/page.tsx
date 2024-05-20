@@ -1,8 +1,4 @@
-import getBillboard from "@/actions/get-billboard";
-import getProducts from "@/actions/get-products";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import Billboard from "@/components/billboard";
-import ProductList from "@/components/product-list";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
