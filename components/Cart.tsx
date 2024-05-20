@@ -15,12 +15,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import useCart from "@/hooks/use-cart";
+import CartItems from "./cart-items";
 
 const Cart = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const cart = useCart();
 
-  const items = [];
-  const itemCount = items.length;
+  const itemCount = cart.items.length;
 
   useEffect(() => {
     setIsMounted(true);
@@ -44,7 +46,9 @@ const Cart = () => {
         {itemCount > 0 ? (
           <>
             <div className="flex w-full flex-col pr-6">
-              <ScrollArea>{/* cartitems */}</ScrollArea>
+              <ScrollArea>
+                <CartItems />
+              </ScrollArea>
             </div>
             <div className="space-y-4 pr-6">
               <Separator />

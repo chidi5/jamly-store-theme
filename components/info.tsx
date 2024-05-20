@@ -6,8 +6,8 @@ import Currency from "./currency";
 import ProductOptions from "./product-option";
 import { Button } from "./ui/button";
 import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
+import useCart from "@/hooks/use-cart";
 
 type InfoProps = {
   data: Product;
@@ -23,12 +23,16 @@ const Info = ({ data, n }: InfoProps) => {
     });
 
     return {
-      id: variant.id,
+      variant: variant.id,
       options: allOptions,
       variantTitle: variant.title,
       variantPrice: variant.price,
       variantInventory: variant.inventory,
       variantQuantity: 1,
+      id: data.id,
+      name: data.name,
+      handle: data.handle,
+      images: data.images,
     };
   });
 
@@ -39,6 +43,7 @@ const Info = ({ data, n }: InfoProps) => {
 
   const [selectedVariant, setSelectedVariant] = useState(allVariantOptions[0]);
   const [selectedOptions, setSelectedOptions] = useState(defaultValues);
+  const cart = useCart();
 
   function setOptions(name: any, value: any) {
     setSelectedOptions((prevState) => {
@@ -56,6 +61,11 @@ const Info = ({ data, n }: InfoProps) => {
       }
     });
   }
+
+  const addToCart = () => {
+    console.log(selectedVariant);
+    cart.addItem(selectedVariant);
+  };
 
   return (
     <div className="lg:p-4">
@@ -87,6 +97,7 @@ const Info = ({ data, n }: InfoProps) => {
           className="flex items-center gap-x-2 w-full rounded-none py-6"
           variant="outline"
           disabled={selectedVariant.variantInventory === "0"}
+          onClick={addToCart}
         >
           {selectedVariant.variantInventory !== "0"
             ? "Add to Cart"

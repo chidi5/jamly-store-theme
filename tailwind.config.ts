@@ -74,11 +74,7 @@ const config = {
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/line-clamp"),
-  ],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
 
 export default config;

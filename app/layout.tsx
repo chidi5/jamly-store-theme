@@ -20,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("relative h-full antialiased", urbanist.className)}>
-        <ModalProvider />
-        <div>{children}</div>
-        <Toaster />
+        <>
+          <ModalProvider />
+          <div>{children}</div>
+          <Toaster />
+        </>
       </body>
     </html>
   );

@@ -64,3 +64,16 @@ export type Store = {
   categories: Category;
   products: Product;
 };
+
+export type CartItems = {
+  variant: string;
+  options: object;
+  variantTitle: string;
+  variantPrice: string;
+  variantInventory: string;
+  variantQuantity: number;
+  id: string;
+  name: string;
+  handle: string;
+  images: Image[];
+};
