@@ -21,9 +21,8 @@ const NavItems = ({ data, className }: NavItemsProps) => {
   return (
     <nav className={cn("flex gap-6 items-center", className)}>
       {routes.map((route) => (
-        <li className="list-none">
+        <li key={route.href} className="list-none">
           <Link
-            key={route.href}
             href={route.href}
             className={cn(
               "text-base font-medium transition-colors hover:text-black",
