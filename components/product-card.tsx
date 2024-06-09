@@ -54,10 +54,17 @@ const ProductCard = ({ data }: ProductCardProps) => {
             {data.name}
           </h5>
         </Link>
-        <Currency
-          value={data?.variants?.[0]?.price}
-          className="text-sm md:text-lg"
-        />
+        {data.manageVariants ? (
+          <Currency
+            value={data?.variants?.[0]?.priceData.price}
+            className="text-sm md:text-lg"
+          />
+        ) : (
+          <Currency
+            value={data?.priceData.price}
+            className="text-sm md:text-lg"
+          />
+        )}
       </div>
     </div>
   );

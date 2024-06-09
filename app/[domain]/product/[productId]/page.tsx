@@ -11,8 +11,9 @@ const Productpage = async ({
   params: { domain: string; productId: string };
 }) => {
   const product = await getProduct(params.productId, params.domain);
+  const categoryIds = product?.categories?.map((category) => category.id) ?? [];
   const suggestedProducts = await getProducts(params.domain, {
-    categoryId: product?.category?.id,
+    categoryId: categoryIds,
     isFeatured: true,
   });
   return (

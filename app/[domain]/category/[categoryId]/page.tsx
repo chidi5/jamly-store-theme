@@ -15,7 +15,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   const category = await getCategory(params.categoryId, params.domain);
 
   const products = await getProducts(params.domain, {
-    categoryId: category.id,
+    categoryId: [category.id],
     isFeatured: true,
   });
 
@@ -30,7 +30,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
       </div>
       <div className="my-10">
         {products.length === 0 && <NoResult />}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
           {products.map((product) => (
             <ProductCard key={product.id} data={product} />
           ))}

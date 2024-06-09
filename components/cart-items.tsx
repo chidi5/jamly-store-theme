@@ -32,7 +32,8 @@ const CartItems = () => {
                     </p>
                   </div>
                   <p className="mt-1 text-sm text-gray-500">
-                    {product.variantTitle}
+                    {product.variantTitle ||
+                      Object.values(product.selectedOptions ?? {}).join(", ")}
                   </p>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">

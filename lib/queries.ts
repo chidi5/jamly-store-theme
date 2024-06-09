@@ -3,7 +3,7 @@ import qs from "query-string";
 import { Billboard, Category, Product, Store } from "@/types";
 
 interface ProductQuery {
-  categoryId: string;
+  categoryId?: string[];
   isFeatured: boolean;
 }
 
