@@ -8,6 +8,12 @@ import Markdown from "react-markdown";
 import Currency from "./currency";
 import ProductOptions from "./product-option";
 import { Button } from "./ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 type InfoProps = {
   data: Product;
@@ -138,6 +144,7 @@ const Info = ({ data, n }: InfoProps) => {
         </Button>
       </div>
       <div className="mt-4 text-left">
+        <h3 className="mb-2 font-bold">Product description</h3>
         <Markdown
           className={cn(
             "prose text-sm text-muted-foreground",
@@ -146,6 +153,27 @@ const Info = ({ data, n }: InfoProps) => {
         >
           {data.description}
         </Markdown>
+      </div>
+      <div className="mt-4 text-left">
+        {data.additionalInfoSections.map((info) => (
+          <Accordion key={info.id} type="single" collapsible>
+            <AccordionItem value={info.id}>
+              <AccordionTrigger className="text-gray-700">
+                {info.title}
+              </AccordionTrigger>
+              <AccordionContent>
+                <Markdown
+                  className={cn(
+                    "prose text-sm text-muted-foreground",
+                    n ? "line-clamp-1" : "line-clamp-none"
+                  )}
+                >
+                  {info.description}
+                </Markdown>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ))}
       </div>
     </div>
   );
