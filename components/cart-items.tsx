@@ -44,7 +44,7 @@ const CartItems = () => {
                       type="button"
                       variant="link"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
-                      onClick={() => cart.removeItem(product.id)}
+                      onClick={() => cart.removeItem(product)}
                     >
                       Remove
                     </Button>

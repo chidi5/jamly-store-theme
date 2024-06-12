@@ -52,7 +52,7 @@ const Cart = () => {
         {itemCount > 0 ? (
           <div className="flex flex-col h-full">
             <div className="flex w-full flex-col pr-6">
-              <div className="h-full overflow-y-scroll no-scrollbar">
+              <div className="h-[400px] overflow-y-scroll no-scrollbar">
                 <CartItems />
               </div>
             </div>
