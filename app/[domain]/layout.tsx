@@ -35,5 +35,6 @@ export async function generateMetadata({
 
   return {
     title: store.name,
+    description: store.name,
   };
 }
