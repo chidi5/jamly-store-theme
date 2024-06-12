@@ -51,12 +51,12 @@ const Cart = () => {
         </SheetHeader>
         {itemCount > 0 ? (
           <div className="flex flex-col h-full">
-            <div className="flex w-full flex-col pr-6">
-              <div className="h-[400px] overflow-y-scroll no-scrollbar">
+            <div className="flex w-full flex-col pr-6 flex-1 overflow-hidden">
+              <div className="overflow-y-scroll no-scrollbar flex-grow">
                 <CartItems />
               </div>
             </div>
-            <div className="flex flex-col mt-auto justify-end space-y-4 pr-6">
+            <div className="flex flex-col justify-end space-y-4 pr-6 py-10">
               <Separator />
               <div className="space-y-1.5 text-sm">
                 <div className="flex">
