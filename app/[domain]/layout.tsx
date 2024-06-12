@@ -25,3 +25,15 @@ const Layout = async ({
 };
 
 export default Layout;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { domain: string };
+}) {
+  const store = await getStore(params.domain);
+
+  return {
+    title: store.name,
+  };
+}
