@@ -18,8 +18,14 @@ import {
 import useCart from "@/hooks/use-cart";
 import CartItems from "./cart-items";
 import Currency from "./currency";
+import CartSummary from "./cart-summary";
+import { Store } from "@/types";
 
-const Cart = () => {
+type CartProps = {
+  store: Store;
+};
+
+const Cart = ({ store }: CartProps) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const cart = useCart();
   const items = useCart((state) => state.items);
@@ -56,33 +62,9 @@ const Cart = () => {
                 <CartItems />
               </div>
             </div>
-            <div className="flex flex-col justify-end space-y-4 pr-6 py-10">
+            <div className="flex flex-col justify-end space-y-4 pr-6 pb-8">
               <Separator />
-              <div className="space-y-1.5 text-sm">
-                <div className="flex">
-                  <span className="flex-1">Shipping</span>
-                  <span>Free</span>
-                </div>
-                <div className="flex">
-                  <span className="flex-1">Total</span>
-                  <span>
-                    <Currency value={totalPrice} />
-                  </span>
-                </div>
-              </div>
-
-              <SheetFooter>
-                <SheetTrigger asChild>
-                  <Link
-                    href="/cart"
-                    className={buttonVariants({
-                      className: "w-full",
-                    })}
-                  >
-                    Continue to Checkout
-                  </Link>
-                </SheetTrigger>
-              </SheetFooter>
+              <CartSummary store={store} />
             </div>
           </div>
         ) : (

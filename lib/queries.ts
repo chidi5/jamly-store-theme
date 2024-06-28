@@ -1,6 +1,7 @@
 "use server";
 import qs from "query-string";
 import { Billboard, Category, Product, Store } from "@/types";
+import axios from "axios";
 
 interface ProductQuery {
   categoryId?: string[];
@@ -12,7 +13,7 @@ interface BillboardQuery {
 }
 
 export const getStore = async (id: string): Promise<Store> => {
-  const URL = `${process.env.NEXT_PUBLIC_API_URL}/${id}/store`;
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/${id}`;
   const res = await fetch(URL, { next: { revalidate: 0 } });
   return res.json();
 };

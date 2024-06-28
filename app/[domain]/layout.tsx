@@ -12,7 +12,6 @@ const Layout = async ({
   params: { domain: string };
 }) => {
   const store = await getStore(params.domain);
-
   if (!store) redirect(`${process.env.NEXT_PUBLIC_URL}`);
 
   return (

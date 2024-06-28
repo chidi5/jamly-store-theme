@@ -7,6 +7,7 @@ import { getCategories } from "@/lib/queries";
 import { Store } from "@/types";
 
 const Navbar = async ({ store }: { store: Store }) => {
+  console.log(store);
   const categories = await getCategories(store.id);
 
   return (
@@ -31,7 +32,7 @@ const Navbar = async ({ store }: { store: Store }) => {
                 <div className="lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <div className="ml-4 flow-root lg:ml-6">
                     {/* TODO: Cart */}
-                    <Cart />
+                    <Cart store={store} />
                   </div>
                 </div>
               </div>

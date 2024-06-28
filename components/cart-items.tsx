@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 import Currency from "./currency";
+import Image from "next/image";
 
 const CartItems = () => {
   const cart = useCart();
@@ -14,7 +15,7 @@ const CartItems = () => {
           {cart.items.map((product) => (
             <li key={product.id} className="flex py-6">
               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                <img
+                <Image
                   src={product.images[0].url}
                   alt={product.name}
                   className="h-full w-full object-cover object-center"
@@ -27,9 +28,9 @@ const CartItems = () => {
                     <h3>
                       <Link href={product.handle}>{product.name}</Link>
                     </h3>
-                    <p className="ml-4">
+                    <div className="ml-4">
                       <Currency value={product.variantPrice} />
-                    </p>
+                    </div>
                   </div>
                   <p className="mt-1 text-sm text-gray-500">
                     {product.variantTitle ||

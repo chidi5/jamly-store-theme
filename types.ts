@@ -88,6 +88,14 @@ export type Stock = {
   inventoryStatus: string;
 };
 
+export type PaymentConfig = {
+  id: string;
+  provider: string;
+  publicKey: string;
+  secretKey: string;
+  isActive: boolean;
+};
+
 export type Store = {
   id: string;
   name: string;
@@ -102,6 +110,7 @@ export type Store = {
   billboards: Billboard;
   categories: Category;
   products: Product;
+  paymentConfigs: PaymentConfig[];
 };
 
 export type SelectedOptions = {
