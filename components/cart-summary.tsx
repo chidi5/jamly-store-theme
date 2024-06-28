@@ -31,7 +31,9 @@ const CartSummary = ({ store }: CartSummaryProps) => {
       setPublicKey(activeConfig!.publicKey);
     };
 
-    getActivePublicKey(store.paymentConfigs);
+    if (store.paymentConfigs.length > 0) {
+      getActivePublicKey(store.paymentConfigs);
+    }
   }, [store]);
 
   //const publicKey = getActivePublicKey(store.paymentConfigs);
