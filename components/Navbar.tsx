@@ -7,7 +7,6 @@ import { getCategories } from "@/lib/queries";
 import { Store } from "@/types";
 
 const Navbar = async ({ store }: { store: Store }) => {
-  console.log(store);
   const categories = await getCategories(store.id);
 
   return (
