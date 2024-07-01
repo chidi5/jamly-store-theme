@@ -71,8 +71,8 @@ export const SignIn = async (
   }
 };
 
-export const getSession = (ctx: any) => {
-  const cookies = parseCookies(ctx);
+export const getSession = () => {
+  const cookies = parseCookies();
   const sessionToken = cookies["auth-session"];
 
   if (!sessionToken) {
@@ -80,16 +80,4 @@ export const getSession = (ctx: any) => {
   }
 
   return sessionToken;
-
-  // try {
-  //   const response = await axios.get(`${API_URL}/auth/session`, {
-  //     headers: {
-  //       Authorization: `Bearer ${sessionToken}`,
-  //     },
-  //   });
-  //   return response.data;
-  // } catch (error) {
-  //   console.error("Get session error:", error);
-  //   return null;
-  // }
 };
