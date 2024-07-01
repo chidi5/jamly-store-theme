@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCookie, setCookie } from "cookies-next";
 
 export default async function middleware(req: NextRequest) {
   //rewrite for domains
@@ -28,17 +29,34 @@ export default async function middleware(req: NextRequest) {
       new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url)
     );
   }
+
+  if (customSubDomain) {
+    // Check for the authToken in the main domain
+    const authToken = getCookie("auth-session", {
+      req,
+      domain: `${process.env.NEXT_PUBLIC_DOMAIN}`,
+    });
+
+    // If authToken exists, set it in the subdomain
+    if (authToken) {
+      setCookie("authToken", authToken, {
+        req,
+        res: NextResponse.next(),
+        domain: `${customSubDomain}.${process.env.NEXT_PUBLIC_DOMAIN}`,
+        httpOnly: true,
+        secure: true, // Set to true if using HTTPS
+        sameSite: "lax",
+      });
+    }
+
+    return NextResponse.rewrite(
+      new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url)
+    );
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all paths except for:
-     * 1. /api routes
-     * 2. /_next (Next.js internals)
-     * 3. /_static (inside /public)
-     * 4. all root files inside /public (e.g. /favicon.ico)
-     */
-    "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
-  ],
+  matcher: ["/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)"],
 };
