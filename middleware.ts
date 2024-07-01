@@ -34,7 +34,7 @@ export default async function middleware(req: NextRequest) {
     // Check for the authToken in the main domain
     const authToken = getCookie("auth-session", {
       req,
-      domain: `${process.env.NEXT_PUBLIC_DOMAIN}`,
+      domain: `${process.env.NEXT_PUBLIC_API_DOMAIN}`,
     });
 
     // If authToken exists, set it in the subdomain
