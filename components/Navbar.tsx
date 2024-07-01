@@ -11,7 +11,7 @@ const Navbar = async ({ store }: { store: Store }) => {
   const categories = await getCategories(store.id);
   const session = await getCookie("auth-session");
 
-  console.log({ session: session?.name });
+  //console.log({ session: session?.name });
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-20">

@@ -57,12 +57,7 @@ export const SignIn = async (
       return { error: response.data.error };
     }
 
-    // if (response.data.success) {
-    //   console.log({ response });
-    //   const cookie = await getCookie("next-auth");
-    //   console.log({ cookie });
-    //   //document.cookie = `next-auth.session-token=${response.data.customer.sessionToken}; path=/;`;
-    // }
+    document.cookie = `auth-session=${response.data.token}; path=/; sameSite=lax; secure; httpOnly;`;
 
     return { data: response.data, success: response.data.success };
   } catch (error) {
