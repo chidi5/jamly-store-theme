@@ -39,7 +39,7 @@ export default async function middleware(req: NextRequest) {
 
     // If authToken exists, set it in the subdomain
     if (authToken) {
-      setCookie("authToken", authToken, {
+      setCookie("auth-session", authToken, {
         req,
         res: NextResponse.next(),
         domain: `${customSubDomain}.${process.env.NEXT_PUBLIC_DOMAIN}`,
