@@ -2,6 +2,7 @@
 import qs from "query-string";
 import { Billboard, Category, Product, Store } from "@/types";
 import axios from "axios";
+import { cookies } from "next/headers";
 
 interface ProductQuery {
   categoryId?: string[];
@@ -80,4 +81,9 @@ export const getProducts = async (
   });
   const res = await fetch(url, { next: { revalidate: 0 } });
   return res.json();
+};
+
+export const getCookie = async (store: string) => {
+  const cookieStore = cookies();
+  return cookieStore.get(store);
 };

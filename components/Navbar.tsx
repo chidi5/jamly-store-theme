@@ -1,13 +1,17 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import NavItems from "@/components/NavItems";
+import { getCategories, getCookie } from "@/lib/queries";
+import { Store } from "@/types";
 import Link from "next/link";
 import Cart from "./Cart";
 import MobileNav from "./MobileNav";
-import { getCategories } from "@/lib/queries";
-import { Store } from "@/types";
+import UserButton from "./UserButton";
 
 const Navbar = async ({ store }: { store: Store }) => {
   const categories = await getCategories(store.id);
+  const session = await getCookie("auth-session");
+
+  console.log({ session: session?.name });
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-20">
@@ -20,6 +24,7 @@ const Navbar = async ({ store }: { store: Store }) => {
               <div className="flex lg:ml-0 items-center justify-center">
                 <Link href="/" className="font-bold text-lg sm:text-2xl">
                   {store.name ? store.name : "My Store"}
+                  {session?.name}
                 </Link>
               </div>
 
@@ -29,8 +34,8 @@ const Navbar = async ({ store }: { store: Store }) => {
 
               <div className="ml-auto flex items-center">
                 <div className="lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  <UserButton />
                   <div className="ml-4 flow-root lg:ml-6">
-                    {/* TODO: Cart */}
                     <Cart store={store} />
                   </div>
                 </div>
