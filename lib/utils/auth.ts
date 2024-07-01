@@ -1,6 +1,5 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
-import { getCookie } from "../queries";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
