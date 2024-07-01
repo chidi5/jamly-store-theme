@@ -46,6 +46,7 @@ export default async function middleware(req: NextRequest) {
         httpOnly: true,
         secure: true, // Set to true if using HTTPS
         sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 2,
       });
     }
 
