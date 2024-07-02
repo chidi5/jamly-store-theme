@@ -1,7 +1,10 @@
+"use server";
+
 import axios from "axios";
-import { parseCookies } from "nookies";
+import { cookies } from "next/headers";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const PUBLIC_DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 
 export const SignUp = async (
   email: string,
@@ -56,7 +59,16 @@ export const SignIn = async (
       return { error: response.data.error };
     }
 
+    const twoDays = 24 * 60 * 60 * 1000 * 2;
     //document.cookie = `auth-session=${response.data.token}; path=/; sameSite=none; secure;`;
+    cookies().set({
+      name: "auth-session",
+      value: response.data.token,
+      domain: `.${PUBLIC_DOMAIN}`,
+      path: "/",
+      secure: true,
+      expires: Date.now() + twoDays,
+    });
 
     return { data: response.data, success: response.data.success };
   } catch (error) {
@@ -68,15 +80,4 @@ export const SignIn = async (
     }
     return { error: "An unknown error occurred." };
   }
-};
-
-export const getSession = () => {
-  const cookies = parseCookies();
-  const sessionToken = cookies["auth-session"];
-
-  if (!sessionToken) {
-    return null;
-  }
-
-  return sessionToken;
 };
