@@ -4,7 +4,7 @@ import axios from "axios";
 import { cookies } from "next/headers";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const PUBLIC_DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
+const PUBLIC_DOMAIN = process.env.NEXT_PUBLIC_DOMAIN!;
 
 export const SignUp = async (
   email: string,
@@ -58,6 +58,8 @@ export const SignIn = async (
     if (response.data.error) {
       return { error: response.data.error };
     }
+
+    //console.log(response.data.token);
 
     const twoDays = 24 * 60 * 60 * 1000 * 2;
     //document.cookie = `auth-session=${response.data.token}; path=/; sameSite=none; secure;`;
