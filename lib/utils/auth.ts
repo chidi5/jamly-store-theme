@@ -2,7 +2,6 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const PUBLIC_DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 
 export const SignUp = async (
   email: string,
@@ -57,7 +56,7 @@ export const SignIn = async (
       return { error: response.data.error };
     }
 
-    document.cookie = `auth-session=${response.data.token}; domain=.${PUBLIC_DOMAIN} path=/; sameSite=none; secure;`;
+    //document.cookie = `auth-session=${response.data.token}; path=/; sameSite=none; secure;`;
 
     return { data: response.data, success: response.data.success };
   } catch (error) {
