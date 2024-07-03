@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { SignUp } from "@/lib/utils/auth";
+import { signUp } from "@/lib/utils/auth";
 import { CustomerSignUpSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
@@ -51,7 +51,7 @@ export const SignUpForm = ({ storeId }: SignUpFormProps) => {
     setSuccess("");
 
     startTransition(async () => {
-      const response = await SignUp(
+      const response = await signUp(
         data.email,
         data.password,
         data.firstName,

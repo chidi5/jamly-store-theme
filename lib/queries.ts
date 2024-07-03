@@ -1,8 +1,7 @@
 "use server";
-import qs from "query-string";
-import { Billboard, Category, Product, Store } from "@/types";
-import axios from "axios";
+import { Billboard, Category, Customer, Product, Store } from "@/types";
 import { cookies } from "next/headers";
+import qs from "query-string";
 
 interface ProductQuery {
   categoryId?: string[];
@@ -83,7 +82,21 @@ export const getProducts = async (
   return res.json();
 };
 
+export const getCustomer = async (
+  id: string,
+  storeId: string
+): Promise<Customer> => {
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/${storeId}/customers`;
+  const res = await fetch(`${URL}/${id}`, { next: { revalidate: 0 } });
+  return res.json();
+};
+
 export const getCookie = async (store: string) => {
   const cookieStore = cookies();
   return cookieStore.get(store);
+};
+
+export const deleteCookie = async (store: string) => {
+  const cookieStore = cookies();
+  return cookieStore.delete(store);
 };

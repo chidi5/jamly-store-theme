@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { currentUser } from "./hooks/use-auth";
+import { getCookie } from "./lib/queries";
 
 export default async function middleware(req: NextRequest) {
   //rewrite for domains
@@ -21,6 +23,13 @@ export default async function middleware(req: NextRequest) {
     if (parts.length >= 2) {
       customSubDomain = parts[0];
     }
+  }
+
+  const user = await getCookie("auth-session-token");
+
+  // If the user is authenticated and trying to access the sign-in page, redirect to the home page
+  if (user && (url.pathname === "/sign-in" || url.pathname === "/sign-up")) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (customSubDomain) {

@@ -15,11 +15,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { SignIn } from "@/lib/utils/auth";
+import { signIn } from "@/lib/utils/auth";
 import { CustomerSignInSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,6 +32,7 @@ type SignInFormProps = {
 };
 
 export const SignInForm = ({ storeId }: SignInFormProps) => {
+  const router = useRouter();
   const [loading, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -49,13 +51,14 @@ export const SignInForm = ({ storeId }: SignInFormProps) => {
     setSuccess("");
 
     startTransition(async () => {
-      const response = await SignIn(data.email, data.password, storeId);
+      const response = await signIn(data.email, data.password, storeId);
       if (response?.error) {
         setError(response.error);
       }
       if (response?.success) {
         form.reset();
         setSuccess(response.success);
+        router.push("/");
       }
     });
   };

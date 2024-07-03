@@ -1,3 +1,10 @@
+export type Customer = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type Billboard = {
   id: string;
   label: string;
@@ -128,4 +135,14 @@ export type CartItems = {
   name: string;
   handle: string;
   images: Image[];
+};
+
+export type Session = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  iat: number;
+  exp: number;
 };

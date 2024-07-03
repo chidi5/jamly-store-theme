@@ -1,6 +1,6 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import NavItems from "@/components/NavItems";
-import { getCategories, getCookie } from "@/lib/queries";
+import { getCategories } from "@/lib/queries";
 import { Store } from "@/types";
 import Link from "next/link";
 import Cart from "./Cart";
@@ -9,9 +9,6 @@ import UserButton from "./UserButton";
 
 const Navbar = async ({ store }: { store: Store }) => {
   const categories = await getCategories(store.id);
-  const session = await getCookie("auth-session");
-
-  //console.log({ session: session?.name });
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-20">
@@ -24,7 +21,6 @@ const Navbar = async ({ store }: { store: Store }) => {
               <div className="flex lg:ml-0 items-center justify-center">
                 <Link href="/" className="font-bold text-lg sm:text-2xl">
                   {store.name ? store.name : "My Store"}
-                  {session?.name}
                 </Link>
               </div>
 
