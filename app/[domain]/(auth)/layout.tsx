@@ -1,6 +1,3 @@
-import { currentUser } from "@/hooks/use-auth";
-import { redirect } from "next/navigation";
-
 export default function Layout({
   children,
 }: Readonly<{
