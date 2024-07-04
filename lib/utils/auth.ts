@@ -14,7 +14,15 @@ const parseKey = (key: string) => {
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const PUBLIC_DOMAIN = process.env.NEXT_PUBLIC_DOMAIN!;
 const production = process.env.NODE_ENV === "production";
-const cert = parseKey(process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY!);
+const jwtPublicKey = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY;
+
+if (!jwtPublicKey) {
+  throw new Error(
+    "Environment variable NEXT_PUBLIC_JWT_PUBLIC_KEY is not set."
+  );
+}
+
+const cert = parseKey(jwtPublicKey);
 
 export const signUp = async (
   email: string,
