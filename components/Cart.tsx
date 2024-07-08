@@ -1,25 +1,22 @@
 "use client";
 
+import useCart from "@/hooks/use-cart";
+import { Store } from "@/types";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import CartItems from "./cart-items";
+import CartSummary from "./cart-summary";
 import { buttonVariants } from "./ui/button";
-import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
 import {
   Sheet,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import useCart from "@/hooks/use-cart";
-import CartItems from "./cart-items";
-import Currency from "./currency";
-import CartSummary from "./cart-summary";
-import { Store } from "@/types";
 
 type CartProps = {
   store: Store;
@@ -28,11 +25,6 @@ type CartProps = {
 const Cart = ({ store }: CartProps) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const cart = useCart();
-  const items = useCart((state) => state.items);
-
-  const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.variantPrice);
-  }, 0);
 
   const itemCount = cart.items.length;
 

@@ -11,7 +11,7 @@ const Navbar = async ({ store }: { store: Store }) => {
   const categories = await getCategories(store.id);
 
   return (
-    <div className="bg-white sticky z-50 top-0 inset-x-0 h-20">
+    <div className="bg-white sticky z-40 top-0 inset-x-0 h-20">
       <header className="relative bg-white border border-gray-200">
         <MaxWidthWrapper>
           <div>
@@ -24,14 +24,14 @@ const Navbar = async ({ store }: { store: Store }) => {
                 </Link>
               </div>
 
-              <div className="hidden z-50 lg:ml-8 lg:block">
+              <div className="hidden z-40 lg:ml-8 lg:block">
                 <NavItems data={categories} />
               </div>
 
               <div className="ml-auto flex items-center">
-                <div className="lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                <div className="md:flex md:flex-1 md:items-center md:justify-end md:space-x-6">
                   <UserButton />
-                  <div className="ml-4 flow-root lg:ml-6">
+                  <div className="ml-3 flow-root lg:ml-6">
                     <Cart store={store} />
                   </div>
                 </div>

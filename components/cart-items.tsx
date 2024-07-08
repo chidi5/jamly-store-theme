@@ -29,7 +29,9 @@ const CartItems = () => {
                 <div>
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <h3>
-                      <Link href={product.handle}>{product.name}</Link>
+                      <Link href={`/product/${product.handle}`}>
+                        {product.name}
+                      </Link>
                     </h3>
                     <div className="ml-4">
                       <Currency value={product.variantPrice} />

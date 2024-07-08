@@ -11,7 +11,7 @@ const UserButton = async () => {
       {user ? (
         <UserDropDownButton />
       ) : (
-        <Link href="/sign-in" className="hidden lg:flex">
+        <Link href="/sign-in" className="hidden md:flex">
           <UserRound className="w-5 h-5 text-gray-600 hover:text-gray-700" />
         </Link>
       )}

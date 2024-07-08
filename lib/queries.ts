@@ -82,7 +82,7 @@ export const getProducts = async (
   return res.json();
 };
 
-export const getCustomer = async (
+export const getCustomerById = async (
   id: string,
   storeId: string
 ): Promise<Customer> => {

@@ -111,7 +111,7 @@ const Info = ({ data, n }: InfoProps) => {
 
   return (
     <div className="lg:p-4">
-      <h1 className="text-3xl sm:text-5xl xl:text-4xl font-semibold text-gray-900">
+      <h1 className="text-3xl sm:text-5xl xl:text-4xl font-medium text-gray-900">
         {data.name}
       </h1>
       <div className="mt-6 flex flex-col">
@@ -144,7 +144,7 @@ const Info = ({ data, n }: InfoProps) => {
         </Button>
       </div>
       <div className="mt-4 text-left">
-        <h3 className="mb-2 font-bold">Product description</h3>
+        <h3 className="mb-2 font-medium">Product description</h3>
         <Markdown
           className={cn(
             "prose text-sm text-muted-foreground",

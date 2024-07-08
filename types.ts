@@ -3,6 +3,8 @@ export type Customer = {
   email: string;
   firstName: string;
   lastName: string;
+  phone: string;
+  address: string;
 };
 
 export type Billboard = {
@@ -145,4 +147,19 @@ export type Session = {
   role: string;
   iat: number;
   exp: number;
+};
+
+export type Address = {
+  address: string;
+  city: string;
+  zipCode: string;
+  state: string;
+  country: string;
+};
+
+export type CheckoutFormData = {
+  email: string;
+  phone: string;
+  address: Address;
+  isCustomerInfo?: boolean;
 };

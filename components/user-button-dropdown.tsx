@@ -25,7 +25,7 @@ export const UserDropDownButton = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none focus:outline-none focus:ring-0">
+      <DropdownMenuTrigger className="outline-none focus:outline-none focus:ring-0 hidden md:flex">
         <UserRound className="w-5 h-5 text-gray-600 hover:text-gray-700" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-4 shadow-none">
