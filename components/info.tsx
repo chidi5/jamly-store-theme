@@ -95,6 +95,8 @@ const Info = ({ data, n }: InfoProps) => {
     : data.stock.quantity === 0 ||
       data.stock.inventoryStatus === "OUT_OF_STOCK";
 
+  console.log(selectedVariant);
+
   const getPrice = () => {
     if (data.manageVariants && selectedVariant) {
       return selectedVariant.variantPrice;
