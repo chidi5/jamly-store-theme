@@ -22,7 +22,7 @@ type InfoProps = {
 
 const Info = ({ data, n }: InfoProps) => {
   const cart = useCart();
-
+  console.log(data);
   // Handle products with variants and options
   const allVariantOptions =
     data.variants?.map((variant) => {
