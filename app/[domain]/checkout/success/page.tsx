@@ -120,8 +120,6 @@ const SuccessPage = ({ params }: CheckoutProps) => {
           "Error during payment verification and order creation:",
           error
         );
-      } finally {
-        setIsProcessing(false);
       }
     };
 
