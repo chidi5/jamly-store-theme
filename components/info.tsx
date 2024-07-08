@@ -90,9 +90,9 @@ const Info = ({ data, n }: InfoProps) => {
   };
 
   const isOutOfStock = data.manageVariants
-    ? selectedVariant.variantInventoryStatus !== "IN_STOCK" ||
+    ? selectedVariant.variantInventoryStatus !== "IN_STOCK" &&
       selectedVariant.variantInventory === 0
-    : data.stock.inventoryStatus !== "IN_STOCK" || data.stock.quantity === 0;
+    : data.stock.inventoryStatus !== "IN_STOCK" && data.stock.quantity === 0;
 
   console.log("Is Out of Stock:", isOutOfStock);
 
