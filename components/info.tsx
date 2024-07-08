@@ -22,7 +22,7 @@ type InfoProps = {
 
 const Info = ({ data, n }: InfoProps) => {
   const cart = useCart();
-  console.log(data);
+
   // Handle products with variants and options
   const allVariantOptions =
     data.variants?.map((variant) => {
@@ -93,8 +93,6 @@ const Info = ({ data, n }: InfoProps) => {
     ? selectedVariant.variantInventoryStatus !== "IN_STOCK" &&
       selectedVariant.variantInventory === 0
     : data.stock.inventoryStatus !== "IN_STOCK" && data.stock.quantity === 0;
-
-  console.log("Is Out of Stock:", isOutOfStock);
 
   const getPrice = () => {
     if (data.manageVariants && selectedVariant) {
