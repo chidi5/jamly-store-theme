@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
@@ -24,6 +24,9 @@ const SuccessPage = ({ params }: CheckoutProps) => {
 
   const reference = searchParams.get("reference");
 
+  // Memoize cart items to avoid unnecessary re-renders
+  const memoizedCartItems = useMemo(() => cart.items, [cart.items]);
+
   useEffect(() => {
     const initializeCart = async () => {
       // Adding a delay to allow Zustand to initialize the cart state
@@ -35,24 +38,24 @@ const SuccessPage = ({ params }: CheckoutProps) => {
   }, []);
 
   useEffect(() => {
-    if (isProcessing || !isCartInitialized) return;
-
-    if (!reference) {
-      // Handle case where reference is missing
-      toast({
-        variant: "destructive",
-        description: "Payment reference not found",
-      });
-      router.push("/"); // Redirect to home or another appropriate page
-      return;
-    }
-
     const verifyPaymentAndCreateOrder = async () => {
+      if (isProcessing || !isCartInitialized) return;
+
+      if (!reference) {
+        // Handle case where reference is missing
+        toast({
+          variant: "destructive",
+          description: "Payment reference not found",
+        });
+        router.push("/"); // Redirect to home or another appropriate page
+        return;
+      }
+
       setIsProcessing(true);
 
       const user = await currentUser();
 
-      const session = await getCookie("customer-details");
+      const session = getCookie("customer-details");
 
       if (!session) {
         toast({
@@ -66,7 +69,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
       const customer = JSON.parse(session as string);
 
       // Log cart items
-      console.log("Cart items:", cart.items);
+      console.log("Cart items:", memoizedCartItems);
 
       try {
         const verifyResponse = await axios.get(
@@ -76,27 +79,23 @@ const SuccessPage = ({ params }: CheckoutProps) => {
           }
         );
 
-        console.log(verifyResponse.data.success);
-
         if (verifyResponse.data.success) {
           const orderResponse = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/order`,
             {
-              products: cart.items,
+              products: memoizedCartItems,
               address: customer?.address,
               phone: customer?.phone,
               customerId: user?.id,
             }
           );
 
-          console.log("Order response:", orderResponse.data);
-
           if (orderResponse.data.success) {
-            cart.removeAll();
-            await deleteCookie("customer-details");
             toast({
               description: "Payment successful and order created",
             });
+            cart.removeAll();
+            deleteCookie("customer-details");
           } else {
             toast({
               variant: "destructive",
@@ -123,12 +122,14 @@ const SuccessPage = ({ params }: CheckoutProps) => {
       }
     };
 
-    verifyPaymentAndCreateOrder();
+    if (isCartInitialized && !isProcessing) {
+      verifyPaymentAndCreateOrder();
+    }
   }, [
     reference,
     params.domain,
     router,
-    cart.items,
+    memoizedCartItems,
     isProcessing,
     isCartInitialized,
   ]);
