@@ -98,6 +98,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
             setIsMounted(true);
             cart.removeAll();
             deleteCookie("customer-details");
+            router.push("/");
           } else {
             toast({
               variant: "destructive",
