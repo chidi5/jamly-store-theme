@@ -21,6 +21,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCartInitialized, setIsCartInitialized] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const reference = searchParams.get("reference");
 
@@ -55,21 +56,21 @@ const SuccessPage = ({ params }: CheckoutProps) => {
 
       const user = await currentUser();
 
-      const session = getCookie("customer-details");
+      let customer;
 
-      if (!session) {
-        toast({
-          variant: "destructive",
-          description: "Customer details not found",
-        });
-        setIsProcessing(false);
-        return;
+      if (!isMounted) {
+        const session = getCookie("customer-details");
+        if (!session) {
+          toast({
+            variant: "destructive",
+            description: "Customer details not found",
+          });
+          setIsProcessing(false);
+          return;
+        }
+
+        customer = JSON.parse(session as string);
       }
-
-      const customer = JSON.parse(session as string);
-
-      // Log cart items
-      console.log("Cart items:", memoizedCartItems);
 
       try {
         const verifyResponse = await axios.get(
@@ -94,6 +95,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
             toast({
               description: "Payment successful and order created",
             });
+            setIsMounted(true);
             cart.removeAll();
             deleteCookie("customer-details");
           } else {
