@@ -106,9 +106,10 @@ const Info = ({ data, n }: InfoProps) => {
   };
 
   const isOutOfStock = data.manageVariants
-    ? selectedVariant.variantInventoryStatus !== "IN_STOCK" &&
+    ? selectedVariant.variantInventoryStatus === "OUT_OF_STOCK" &&
       selectedVariant.variantInventory === 0
-    : data.stock.inventoryStatus !== "IN_STOCK" && data.stock.quantity === 0;
+    : data.stock.inventoryStatus === "OUT_OF_STOCK" &&
+      data.stock.quantity === 0;
 
   const getPrice = () => {
     if (data.manageVariants && selectedVariant) {
