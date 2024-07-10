@@ -6,6 +6,7 @@ import qs from "query-string";
 interface ProductQuery {
   categoryId?: string[];
   isFeatured: boolean;
+  limit?: number;
 }
 
 interface BillboardQuery {
@@ -76,6 +77,7 @@ export const getProducts = async (
     query: {
       categoryId: query.categoryId,
       isFeatured: query.isFeatured,
+      limit: query.limit,
     },
   });
   const res = await fetch(url, { next: { revalidate: 0 } });

@@ -6,6 +6,7 @@ import { getBillboards, getProducts } from "@/lib/queries";
 const Home = async ({ params }: { params: { domain: string } }) => {
   const products = await getProducts(params.domain, {
     isFeatured: true,
+    limit: 10,
   });
   const billboard = await getBillboards(params.domain, { isBanner: true });
   return (

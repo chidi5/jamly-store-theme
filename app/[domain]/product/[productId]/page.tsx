@@ -15,6 +15,7 @@ const Productpage = async ({
   const suggestedProducts = await getProducts(params.domain, {
     categoryId: categoryIds,
     isFeatured: true,
+    limit: 4,
   });
   return (
     <div className="bg-white">
