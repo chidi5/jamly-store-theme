@@ -12,7 +12,7 @@ const Navbar = async ({ store }: { store: Store }) => {
 
   return (
     <div className="bg-white sticky z-40 top-0 inset-x-0 h-16">
-      <header className="relative bg-white border border-gray-200">
+      <header className="relative bg-white border-b border-gray-200">
         <MaxWidthWrapper>
           <div>
             <div className="lg:flex h-16 items-center grid grid-cols-3">
