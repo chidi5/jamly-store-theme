@@ -29,7 +29,7 @@ const CartItems = () => {
                 <div>
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <h3>
-                      <Link href={`/product/${product.handle}`}>
+                      <Link href={`/products/${product.handle}`}>
                         {product.name}
                       </Link>
                     </h3>

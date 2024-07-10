@@ -19,7 +19,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/product/${data?.handle}`);
+    router.push(`/products/${data?.handle}`);
   };
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -49,7 +49,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
         </div>
       </div>
       <div>
-        <Link href={`/product/${data.handle}`}>
+        <Link href={`/products/${data.handle}`}>
           <h5 className="mb-2 text-sm font-normal tracking-tight group-hover:underline">
             {data.name}
           </h5>
