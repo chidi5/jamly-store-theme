@@ -171,6 +171,7 @@ const Info = ({ data, n }: InfoProps) => {
               type="button"
               data-action="decrement"
               variant="outline"
+              disabled={isOutOfStock}
               className="h-11 w-20 py-1 border-r-0 border-slate-950"
               onClick={decrementQuantity}
             >
@@ -191,6 +192,7 @@ const Info = ({ data, n }: InfoProps) => {
               type="button"
               data-action="increment"
               variant="outline"
+              disabled={isOutOfStock}
               className="h-11 w-20 py-1 border-l-0 border-slate-950"
               onClick={incrementQuantity}
             >
