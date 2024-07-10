@@ -70,7 +70,7 @@ const Info = ({ data, n }: InfoProps) => {
     setSelectedOptions((prevState) => {
       const updatedOptions = { ...prevState, [name]: value };
       const matchingVariant = allVariantOptions.find(
-        (item) =>
+        (item: { options: any }) =>
           JSON.stringify(item.options) === JSON.stringify(updatedOptions)
       );
       if (matchingVariant) {
@@ -109,7 +109,7 @@ const Info = ({ data, n }: InfoProps) => {
     ? selectedVariant.variantInventoryStatus === "OUT_OF_STOCK" &&
       selectedVariant.variantInventory === 0
     : data.stock.inventoryStatus === "OUT_OF_STOCK" &&
-      data.stock.quantity === 0;
+      (data.stock.quantity === 0 || data.stock.quantity === null);
 
   const getPrice = () => {
     if (data.manageVariants && selectedVariant) {
