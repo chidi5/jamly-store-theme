@@ -50,7 +50,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
       </div>
       <div>
         <Link href={`/product/${data.handle}`}>
-          <h5 className="mb-2 text-xs font-normal tracking-tight group-hover:underline">
+          <h5 className="mb-2 text-sm font-normal tracking-tight group-hover:underline">
             {data.name}
           </h5>
         </Link>
