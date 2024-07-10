@@ -14,6 +14,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
+import { Label } from "./ui/label";
+import { Minus, Plus } from "lucide-react";
+import { Input } from "./ui/input";
 
 type InfoProps = {
   data: Product;
@@ -40,6 +43,11 @@ const Info = ({ data, n }: InfoProps) => {
         variantInventory: variant.stock.quantity,
         variantInventoryStatus: variant.stock.inventoryStatus,
         variantQuantity: 1,
+        maxQuantity: variant.stock.trackInventory
+          ? variant.stock.quantity
+          : variant.stock.inventoryStatus === "IN_STOCK"
+          ? 1
+          : 0,
         id: data.id,
         name: data.name,
         handle: data.handle,
@@ -56,6 +64,7 @@ const Info = ({ data, n }: InfoProps) => {
     allVariantOptions[0] || null
   );
   const [selectedOptions, setSelectedOptions] = useState(defaultValues);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   const setOptions = (name: any, value: any) => {
     setSelectedOptions((prevState) => {
@@ -72,9 +81,16 @@ const Info = ({ data, n }: InfoProps) => {
     });
   };
 
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedQuantity(Number(e.target.value));
+  };
+
   const addToCart = () => {
     if (selectedVariant) {
-      cart.addItem(selectedVariant);
+      cart.addItem({
+        ...selectedVariant,
+        variantQuantity: selectedQuantity,
+      });
     } else {
       cart.addItem({
         id: data.id,
@@ -83,7 +99,7 @@ const Info = ({ data, n }: InfoProps) => {
         images: data.images,
         variantInventory: data.stock.quantity,
         variantPrice: data.priceData.price,
-        variantQuantity: 1,
+        variantQuantity: selectedQuantity,
         selectedOptions: selectedOptions,
       });
     }
@@ -101,11 +117,27 @@ const Info = ({ data, n }: InfoProps) => {
     return data.priceData.price;
   };
 
-  const getInventoryStatus = () => {
+  const getMaxQuantity = () => {
     if (data.manageVariants && selectedVariant) {
-      return selectedVariant.variantInventory;
+      return selectedVariant.maxQuantity;
     }
-    return data.stock.quantity;
+    return data.stock.trackInventory
+      ? data.stock.quantity
+      : data.stock.inventoryStatus === "IN_STOCK"
+      ? 1
+      : 0;
+  };
+
+  const incrementQuantity = () => {
+    if (selectedQuantity < getMaxQuantity()) {
+      setSelectedQuantity((prevQuantity) => prevQuantity + 1);
+    }
+  };
+
+  const decrementQuantity = () => {
+    if (selectedQuantity > 1) {
+      setSelectedQuantity((prevQuantity) => prevQuantity - 1);
+    }
   };
 
   return (
@@ -113,7 +145,7 @@ const Info = ({ data, n }: InfoProps) => {
       <h1 className="text-3xl sm:text-5xl xl:text-4xl font-medium text-gray-900">
         {data.name}
       </h1>
-      <div className="mt-6 flex flex-col">
+      <div className="mt-6 flex flex-col space-y-3">
         <div className="text-gray-900">
           <Currency value={getPrice()} className="text-lg font-medium" />
         </div>
@@ -131,10 +163,44 @@ const Info = ({ data, n }: InfoProps) => {
             ))}
           </>
         )}
+        <div className="max-w-36">
+          <Label htmlFor="quantity">Quantity</Label>
+          <div className="relative flex items-center max-w-[11rem] mt-3">
+            <Button
+              type="button"
+              data-action="decrement"
+              variant="outline"
+              className="h-11 w-20 py-1 border-r-0 border-slate-950"
+              onClick={decrementQuantity}
+            >
+              <Minus className="font-normal w-3 h-3" />
+            </Button>
+            <Input
+              type="number"
+              name="quantity"
+              min={1}
+              max={getMaxQuantity()}
+              value={selectedQuantity}
+              onChange={handleQuantityChange}
+              className="border-x-0 border-slate-950 text-center h-11 w-full py-1 px-0 outline-none focus-visible:ring-offset-0 focus-visible:ring-0 md:text-basecursor-default flex items-center"
+              placeholder="100"
+              disabled={isOutOfStock}
+            />
+            <Button
+              type="button"
+              data-action="increment"
+              variant="outline"
+              className="h-11 w-20 py-1 border-l-0 border-slate-950"
+              onClick={incrementQuantity}
+            >
+              <Plus className="font-normal w-3 h-3" />
+            </Button>
+          </div>
+        </div>
       </div>
       <div className="mt-10 flex items-center gap-x-3">
         <Button
-          className="flex items-center gap-x-2 w-full rounded-none py-6"
+          className="flex items-center gap-x-2 w-full rounded-none py-6 border-slate-950"
           variant="outline"
           disabled={isOutOfStock}
           onClick={addToCart}

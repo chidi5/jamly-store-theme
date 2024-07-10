@@ -18,7 +18,7 @@ const ProductOptions = ({
 }: ProductOptionProps) => {
   return (
     <fieldset className="mt-3">
-      <legend className="font-semibold text-sm">{name}</legend>
+      <legend className="font-normal text-sm">{name}</legend>
       <div className="inline-flex items-center flex-wrap">
         {values.map((value) => {
           const id = value.id;
