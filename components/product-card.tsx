@@ -50,19 +50,19 @@ const ProductCard = ({ data }: ProductCardProps) => {
       </div>
       <div>
         <Link href={`/product/${data.handle}`}>
-          <h5 className="mb-2 text-base font-semibold tracking-tight group-hover:underline">
+          <h5 className="mb-2 text-sm font-normal tracking-tight group-hover:underline">
             {data.name}
           </h5>
         </Link>
         {data.manageVariants ? (
           <Currency
             value={data?.variants?.[0]?.priceData.price}
-            className="text-sm md:text-lg"
+            className="text-base md:text-lg"
           />
         ) : (
           <Currency
             value={data?.priceData.price}
-            className="text-sm md:text-lg"
+            className="text-base md:text-lg"
           />
         )}
       </div>

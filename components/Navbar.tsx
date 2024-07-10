@@ -11,11 +11,11 @@ const Navbar = async ({ store }: { store: Store }) => {
   const categories = await getCategories(store.id);
 
   return (
-    <div className="bg-white sticky z-40 top-0 inset-x-0 h-20">
+    <div className="bg-white sticky z-40 top-0 inset-x-0 h-16">
       <header className="relative bg-white border border-gray-200">
         <MaxWidthWrapper>
           <div>
-            <div className="lg:flex h-20 items-center grid grid-cols-3">
+            <div className="lg:flex h-16 items-center grid grid-cols-3">
               <MobileNav data={categories} />
 
               <div className="flex lg:ml-0 items-center justify-center">
