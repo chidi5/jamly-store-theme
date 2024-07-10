@@ -75,6 +75,7 @@ const Info = ({ data, n }: InfoProps) => {
       );
       if (matchingVariant) {
         setSelectedVariant(matchingVariant);
+        setSelectedQuantity(1);
         console.log(matchingVariant);
       }
       return updatedOptions;
