@@ -22,7 +22,7 @@ const Billboard = ({ data }: BillboardProps) => {
               className="!bg-transparent text-white"
               asChild
             >
-              <Link href="/">Shop now</Link>
+              <Link href="/products">Shop now</Link>
             </Button>
           </div>
         </div>
