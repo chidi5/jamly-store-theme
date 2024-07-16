@@ -28,7 +28,7 @@ type UserFormData = z.infer<typeof CheckoutSchema>;
 
 type CheckOutFormProps = {
   storeId: string;
-  customer: Customer;
+  customer?: Customer;
   store: Store;
 };
 
@@ -51,7 +51,9 @@ const CheckOutForm = ({ storeId, customer, store }: CheckOutFormProps) => {
     };
   }
 
-  const customerAddress = addressStringToObject(customer.address);
+  const customerAddress = customer
+    ? addressStringToObject(customer.address)
+    : { address: "", city: "", zipCode: "", state: "", country: "" };
 
   const formattedProducts = cart.items.map((product: any) => ({
     productId: product.id,
@@ -72,11 +74,11 @@ const CheckOutForm = ({ storeId, customer, store }: CheckOutFormProps) => {
           email: customer.email || "",
           phone: customer.phone || "",
           address: {
-            address: customerAddress.address || "",
-            city: customerAddress.city || "",
-            zipCode: customerAddress.zipCode || "",
-            state: customerAddress.state || "",
-            country: customerAddress.country || "",
+            address: customerAddress.address,
+            city: customerAddress.city,
+            zipCode: customerAddress.zipCode,
+            state: customerAddress.state,
+            country: customerAddress.country,
           },
         }
       : {
@@ -94,16 +96,13 @@ const CheckOutForm = ({ storeId, customer, store }: CheckOutFormProps) => {
   });
 
   const onSubmit = async (data: UserFormData) => {
-    if (data.isCustomerInfo) {
-      setFormData(data);
-    }
-    await setCookie("customer-details", JSON.stringify(data));
+    setCookie("customer-details", JSON.stringify(data));
   };
 
   return (
     <MaxWidthWrapper>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 my-10 h-full">
-        <div className="md:border-r border-b pb-6 px-4 lg:px-16 space-y-4">
+        <div className="border-b md:border-r md:border-b-0 pb-6 px-4 lg:px-16 space-y-4">
           <h2 className="font-medium text-muted-foreground">
             Pay {store.name}
           </h2>
@@ -235,31 +234,34 @@ const CheckOutForm = ({ storeId, customer, store }: CheckOutFormProps) => {
                   />
                 </div>
               </div>
-              <FormField
-                control={form.control}
-                name="isCustomerInfo"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>Save details</FormLabel>
-                      <FormDescription>
-                        This will save the phone and address as default details
-                      </FormDescription>
-                    </div>
-                  </FormItem>
-                )}
-              />
+              {customer && (
+                <FormField
+                  control={form.control}
+                  name="isCustomerInfo"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Save details</FormLabel>
+                        <FormDescription>
+                          This will save the phone and address as default
+                          details
+                        </FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
               <PayButton
                 totalPrice={totalPrice}
                 storeId={storeId}
-                formData={formData || form.getValues()}
-                onSubmit={form.handleSubmit(onSubmit)}
+                handleSubmit={form.handleSubmit}
+                onSubmit={onSubmit}
               />
             </form>
           </Form>

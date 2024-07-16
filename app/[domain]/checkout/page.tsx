@@ -13,7 +13,7 @@ type CheckoutProps = {
 const CheckoutPage = async ({ params }: CheckoutProps) => {
   const user = await currentUser();
 
-  if (!user) redirect("/sign-in");
+  if (!user) redirect("/sign-in?redirect=checkout");
 
   const customer = await getCustomerById(user.id, params.domain);
 

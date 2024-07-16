@@ -6,6 +6,7 @@ import { CheckoutFormData } from "@/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { UseFormHandleSubmit } from "react-hook-form";
 import Loader from "./loader";
 import { Button } from "./ui/button";
 import { toast } from "./ui/use-toast";
@@ -13,14 +14,14 @@ import { toast } from "./ui/use-toast";
 interface PayButtonProps {
   totalPrice: number;
   storeId: string;
-  formData?: CheckoutFormData;
-  onSubmit: () => Promise<void>;
+  handleSubmit: UseFormHandleSubmit<CheckoutFormData>;
+  onSubmit: (data: CheckoutFormData) => Promise<void>;
 }
 
 const PayButton: React.FC<PayButtonProps> = ({
   totalPrice,
   storeId,
-  formData,
+  handleSubmit,
   onSubmit,
 }) => {
   const router = useRouter();
@@ -29,22 +30,18 @@ const PayButton: React.FC<PayButtonProps> = ({
 
   const [loading, setLoading] = useState(false);
 
-  const initializePayment = async () => {
-    if (!user) {
-      router.push("/sign-in");
-      return;
-    }
+  const initializePayment = async (data: CheckoutFormData) => {
     setLoading(true);
     try {
-      await onSubmit();
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/${storeId}/checkout`,
         {
           products: cart.items,
           amount: totalPrice,
           customerId: user?.id,
-          phone: formData?.phone,
-          address: formData?.address,
+          email: data.email,
+          phone: data.isCustomerInfo ? data.phone : null,
+          address: data.isCustomerInfo ? data.address : null,
         }
       );
 
@@ -72,7 +69,9 @@ const PayButton: React.FC<PayButtonProps> = ({
         type="submit"
         disabled={loading}
         className="w-full"
-        onClick={initializePayment}
+        onClick={handleSubmit((data) => {
+          onSubmit(data).then(() => initializePayment(data));
+        })}
       >
         Checkout
       </Button>

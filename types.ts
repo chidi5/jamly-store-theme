@@ -157,9 +157,22 @@ export type Address = {
   country: string;
 };
 
+// export type CheckoutFormData = {
+//   email: string;
+//   phone: string;
+//   address: Address;
+//   isCustomerInfo?: boolean;
+// };
+
 export type CheckoutFormData = {
   email: string;
   phone: string;
-  address: Address;
-  isCustomerInfo?: boolean;
+  address: {
+    address: string;
+    city: string;
+    zipCode: string;
+    state: string;
+    country: string;
+  };
+  isCustomerInfo?: boolean | undefined;
 };

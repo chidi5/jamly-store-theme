@@ -20,7 +20,7 @@ import { CustomerSignInSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,6 +37,9 @@ export const SignInForm = ({ storeId }: SignInFormProps) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   const form = useForm<UserFormData>({
     resolver: zodResolver(CustomerSignInSchema),
@@ -58,7 +61,12 @@ export const SignInForm = ({ storeId }: SignInFormProps) => {
       if (response?.success) {
         form.reset();
         setSuccess(response.success);
-        router.push("/");
+
+        if (redirect) {
+          router.push(`/${redirect}`);
+        } else {
+          router.push("/");
+        }
       }
     });
   };
@@ -146,6 +154,16 @@ export const SignInForm = ({ storeId }: SignInFormProps) => {
           <Button type="submit" disabled={loading} className="w-full">
             Continue &nbsp; {loading && <Spinner />}
           </Button>
+          {redirect === "checkout" && (
+            <Button
+              type="button"
+              variant="outline"
+              className="flex justify-center"
+              asChild
+            >
+              <Link href="/checkout/guest">Continue as guest</Link>
+            </Button>
+          )}
         </form>
       </Form>
     </CardWrapper>

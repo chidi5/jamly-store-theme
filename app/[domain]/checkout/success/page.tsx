@@ -40,7 +40,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
 
   useEffect(() => {
     const verifyPaymentAndCreateOrder = async () => {
-      if (isProcessing || !isCartInitialized) return;
+      if (isProcessing || !isCartInitialized || isMounted) return;
 
       if (!reference) {
         // Handle case where reference is missing
@@ -73,14 +73,12 @@ const SuccessPage = ({ params }: CheckoutProps) => {
       }
 
       try {
-        const verifyPayment = axios.get(
+        const verifyResponse = axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/verify-payment`,
-          {
-            params: { reference },
-          }
+          { params: { reference } }
         );
 
-        const createOrder = axios.post(
+        const orderResponse = axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/order`,
           {
             products: memoizedCartItems,
@@ -90,26 +88,31 @@ const SuccessPage = ({ params }: CheckoutProps) => {
           }
         );
 
-        const [verifyResponse, orderResponse] = await Promise.all([
-          verifyPayment,
-          createOrder,
+        const [verifyResult, orderResult] = await Promise.all([
+          verifyResponse,
+          orderResponse,
         ]);
 
-        if (verifyResponse.data.success && orderResponse.data.success) {
+        const isPaymentSuccess = verifyResult.data.success;
+        const isOrderSuccess = orderResult.data.success;
+
+        if (isPaymentSuccess && isOrderSuccess) {
           toast({
             description: "Payment successful and order created",
           });
-          setIsMounted(true);
+          setIsMounted(true); // Ensures the effect won't run again
           cart.removeAll();
           deleteCookie("customer-details");
           router.push("/");
         } else {
-          if (!verifyResponse.data.success) {
+          if (!isPaymentSuccess) {
             toast({
               variant: "destructive",
               description: "Payment verification failed",
             });
-          } else if (!orderResponse.data.success) {
+          }
+
+          if (!isOrderSuccess) {
             toast({
               variant: "destructive",
               description: "Order creation failed",
@@ -131,7 +134,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
       }
     };
 
-    if (isCartInitialized && !isProcessing) {
+    if (isCartInitialized && !isProcessing && !isMounted) {
       verifyPaymentAndCreateOrder();
     }
   }, [
@@ -141,6 +144,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
     memoizedCartItems,
     isProcessing,
     isCartInitialized,
+    isMounted,
   ]);
 
   return <div>Payment Successful! Thank you for your purchase.</div>;
