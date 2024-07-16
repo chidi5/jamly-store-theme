@@ -73,53 +73,61 @@ const SuccessPage = ({ params }: CheckoutProps) => {
       }
 
       try {
-        const verifyResponse = await axios.get(
+        const verifyPayment = axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/verify-payment`,
           {
             params: { reference },
           }
         );
 
-        if (verifyResponse.data.success) {
-          const orderResponse = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/order`,
-            {
-              products: memoizedCartItems,
-              address: customer?.address,
-              phone: customer?.phone,
-              customerId: user?.id,
-            }
-          );
+        const createOrder = axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/order`,
+          {
+            products: memoizedCartItems,
+            address: customer?.address,
+            phone: customer?.phone,
+            customerId: user?.id,
+          }
+        );
 
-          if (orderResponse.data.success) {
+        const [verifyResponse, orderResponse] = await Promise.all([
+          verifyPayment,
+          createOrder,
+        ]);
+
+        if (verifyResponse.data.success && orderResponse.data.success) {
+          toast({
+            description: "Payment successful and order created",
+          });
+          setIsMounted(true);
+          cart.removeAll();
+          deleteCookie("customer-details");
+          router.push("/");
+        } else {
+          if (!verifyResponse.data.success) {
             toast({
-              description: "Payment successful and order created",
+              variant: "destructive",
+              description: "Payment verification failed",
             });
-            setIsMounted(true);
-            cart.removeAll();
-            deleteCookie("customer-details");
-            router.push("/");
-          } else {
+          } else if (!orderResponse.data.success) {
             toast({
               variant: "destructive",
               description: "Order creation failed",
             });
           }
-        } else {
-          toast({
-            variant: "destructive",
-            description: "Payment verification failed",
-          });
         }
       } catch (error) {
         toast({
           variant: "destructive",
-          description: "An error occurred during payment verification",
+          description:
+            "An error occurred during payment verification and order creation",
         });
         console.error(
           "Error during payment verification and order creation:",
           error
         );
+      } finally {
+        setIsProcessing(false);
       }
     };
 
