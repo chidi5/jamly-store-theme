@@ -82,6 +82,9 @@ const Info = ({ data, n }: InfoProps) => {
     });
   };
 
+  console.log({ selectedVariant });
+  console.log({ selectedOptions });
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedQuantity(Number(e.target.value));
   };
@@ -91,6 +94,7 @@ const Info = ({ data, n }: InfoProps) => {
       cart.addItem({
         ...selectedVariant,
         variantQuantity: selectedQuantity,
+        selectedOptions: selectedOptions,
       });
     } else {
       cart.addItem({
