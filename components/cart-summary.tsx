@@ -16,7 +16,7 @@ const CartSummary = ({ store }: CartSummaryProps) => {
   const items = useCart((state) => state.items);
 
   const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.variantPrice);
+    return total + Number(item.variantTotal);
   }, 0);
 
   return (

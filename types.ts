@@ -133,6 +133,7 @@ export type CartItems = {
   variantPrice: number;
   variantInventory: number;
   variantQuantity: number;
+  variantTotal: number;
   id: string;
   name: string;
   handle: string;

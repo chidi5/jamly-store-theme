@@ -34,7 +34,7 @@ const CartItems = () => {
                       </Link>
                     </h3>
                     <div className="ml-4">
-                      <Currency value={product.variantPrice} />
+                      <Currency value={product.variantTotal} />
                     </div>
                   </div>
                   <p className="mt-1 text-sm text-gray-500">

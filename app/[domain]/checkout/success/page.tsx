@@ -82,6 +82,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
           `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/order`,
           {
             products: memoizedCartItems,
+            guest: customer.email,
             address: customer?.address,
             phone: customer?.phone,
             customerId: user?.id,

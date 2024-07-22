@@ -59,12 +59,12 @@ const CheckOutForm = ({ storeId, customer, store }: CheckOutFormProps) => {
     productId: product.id,
     name: product.name,
     quantity: product.variantQuantity,
-    price: product.variantPrice,
+    price: product.variantTotal,
     image: product.images[0].url,
   }));
 
   const totalPrice = cart.items.reduce((total, item) => {
-    return total + Number(item.variantPrice);
+    return total + Number(item.variantTotal);
   }, 0);
 
   const form = useForm<UserFormData>({

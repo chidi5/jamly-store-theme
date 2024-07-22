@@ -43,6 +43,7 @@ const Info = ({ data, n }: InfoProps) => {
         variantInventory: variant.stock.quantity,
         variantInventoryStatus: variant.stock.inventoryStatus,
         variantQuantity: 1,
+        variantTotal: variant.priceData.price,
         maxQuantity: variant.stock.trackInventory
           ? variant.stock.quantity
           : variant.stock.inventoryStatus === "IN_STOCK"
@@ -82,9 +83,6 @@ const Info = ({ data, n }: InfoProps) => {
     });
   };
 
-  console.log({ selectedVariant });
-  console.log({ selectedOptions });
-
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedQuantity(Number(e.target.value));
   };
@@ -94,6 +92,7 @@ const Info = ({ data, n }: InfoProps) => {
       cart.addItem({
         ...selectedVariant,
         variantQuantity: selectedQuantity,
+        variantTotal: getPrice() * selectedQuantity,
         selectedOptions: selectedOptions,
       });
     } else {
@@ -105,6 +104,7 @@ const Info = ({ data, n }: InfoProps) => {
         variantInventory: data.stock.quantity,
         variantPrice: data.priceData.price,
         variantQuantity: selectedQuantity,
+        variantTotal: getPrice() * selectedQuantity,
         selectedOptions: selectedOptions,
       });
     }
