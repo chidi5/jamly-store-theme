@@ -1,20 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { currentUser } from "./hooks/use-auth";
 import { getCookie } from "./lib/queries";
 
 export default async function middleware(req: NextRequest) {
-  //rewrite for domains
   const url = req.nextUrl;
   const searchParams = url.searchParams.toString();
-  let hostname = req.headers;
+  const hostname = req.headers.get("host");
 
   const pathWithSearchParams = `${url.pathname}${
     searchParams.length > 0 ? `?${searchParams}` : ""
   }`;
 
-  //if subdomain exists
+  // Extract custom subdomain
   let customSubDomain = hostname
-    .get("host")
     ?.split(`${process.env.NEXT_PUBLIC_DOMAIN}`)
     .filter(Boolean)[0];
 
@@ -32,11 +29,18 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
+  // Handle subdomain routing
   if (customSubDomain) {
-    return NextResponse.rewrite(
-      new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url)
+    const newUrl = new URL(
+      `/${customSubDomain}${pathWithSearchParams}`,
+      req.url
     );
+    if (newUrl.toString() !== req.url) {
+      return NextResponse.rewrite(newUrl);
+    }
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
