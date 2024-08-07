@@ -1,16 +1,15 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import NoResult from "@/components/no-result";
 import ProductCard from "@/components/product-card";
-import { getProducts } from "@/lib/queries";
+import { getProducts, getStoreDetails } from "@/lib/queries";
+import { redirect } from "next/navigation";
 
-type ProductsPageProps = {
-  params: {
-    domain: string;
-  };
-};
+const ProductsPage = async () => {
+  const store = await getStoreDetails();
 
-const ProductsPage = async ({ params }: ProductsPageProps) => {
-  const products = await getProducts(params.domain, {
+  if (!store) redirect("/site");
+
+  const products = await getProducts(store.id, {
     isFeatured: true,
   });
 

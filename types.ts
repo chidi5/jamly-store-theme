@@ -1,3 +1,7 @@
+export type Domain = {
+  storeId: string;
+};
+
 export type Customer = {
   id: string;
   email: string;

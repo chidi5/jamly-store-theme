@@ -1,21 +1,19 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import useCart from "@/hooks/use-cart";
-import { deleteCookie, getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
 import { currentUser } from "@/hooks/use-auth";
+import useCart from "@/hooks/use-cart";
+import axios from "axios";
+import { deleteCookie, getCookie } from "cookies-next";
+import { headers } from "next/headers";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
-type CheckoutProps = {
-  params: {
-    domain: string;
-  };
+type SuccessProps = {
+  storeId: string;
 };
 
-const SuccessPage = ({ params }: CheckoutProps) => {
+const SuccessPage = ({ storeId }: SuccessProps) => {
   const searchParams = useSearchParams();
   const cart = useCart();
   const router = useRouter();
@@ -74,12 +72,12 @@ const SuccessPage = ({ params }: CheckoutProps) => {
 
       try {
         const verifyResponse = axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/verify-payment`,
+          `${process.env.NEXT_PUBLIC_API_URL}/${storeId}/verify-payment`,
           { params: { reference } }
         );
 
         const orderResponse = axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/${params.domain}/order`,
+          `${process.env.NEXT_PUBLIC_API_URL}/${storeId}/order`,
           {
             products: memoizedCartItems,
             guest: customer.email,
@@ -140,7 +138,7 @@ const SuccessPage = ({ params }: CheckoutProps) => {
     }
   }, [
     reference,
-    params.domain,
+    storeId,
     router,
     memoizedCartItems,
     isProcessing,
@@ -148,7 +146,11 @@ const SuccessPage = ({ params }: CheckoutProps) => {
     isMounted,
   ]);
 
-  return <div>Payment Successful! Thank you for your purchase.</div>;
+  return (
+    <div className="my-20">
+      Payment Successful! Thank you for your purchase.
+    </div>
+  );
 };
 
 export default SuccessPage;

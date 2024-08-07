@@ -40,10 +40,10 @@ const Billboard = ({ data }: BillboardProps) => {
               <Button
                 variant="outline"
                 size="lg"
-                className="!bg-transparent text-white"
+                className="!bg-transparent text-white hover:text-gray-100"
                 asChild
               >
-                <Link href="/">Shop now</Link>
+                <Link href="/products">Shop now</Link>
               </Button>
             </div>
           </div>

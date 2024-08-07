@@ -40,7 +40,7 @@ const MobileNav = ({ data }: MobileNavProps) => {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden relative -m-2 inline-flex items-center justify-left rounded-md p-2 text-gray-700"
+        className="lg:hidden relative -m-2 inline-flex items-center rounded-md p-2 text-gray-700 w-fit"
       >
         <Menu className="h-6 w-6" aria-hidden="true" />
       </button>

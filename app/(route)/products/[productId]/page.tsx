@@ -3,16 +3,17 @@ import Gallery from "@/components/gallery";
 import GalleryCarousel from "@/components/image-carousel";
 import Info from "@/components/info";
 import ProductList from "@/components/product-list";
-import { getProduct, getProducts } from "@/lib/queries";
+import { getProduct, getProducts, getStoreDetails } from "@/lib/queries";
+import { redirect } from "next/navigation";
 
-const Productpage = async ({
-  params,
-}: {
-  params: { domain: string; productId: string };
-}) => {
-  const product = await getProduct(params.productId, params.domain);
+const Productpage = async ({ params }: { params: { productId: string } }) => {
+  const store = await getStoreDetails();
+
+  if (!store) redirect("/site");
+
+  const product = await getProduct(params.productId, store.id);
   const categoryIds = product?.categories?.map((category) => category.id) ?? [];
-  const suggestedProducts = await getProducts(params.domain, {
+  const suggestedProducts = await getProducts(store.id, {
     categoryId: categoryIds,
     isFeatured: true,
     limit: 4,

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Cart from "./Cart";
 import MobileNav from "./MobileNav";
 import UserButton from "./UserButton";
+import Image from "next/image";
 
 const Navbar = async ({ store }: { store: Store }) => {
   const categories = await getCategories(store.id);
@@ -19,9 +20,21 @@ const Navbar = async ({ store }: { store: Store }) => {
               <MobileNav data={categories} />
 
               <div className="flex lg:ml-0 items-center justify-center">
-                <Link href="/" className="font-bold text-lg sm:text-2xl">
-                  {store.name ? store.name : "My Store"}
-                </Link>
+                {store.storeLogo ? (
+                  <Link href="/">
+                    <Image
+                      src={store.storeLogo}
+                      width={80}
+                      height={80}
+                      className="object-cover"
+                      alt={"store logo"}
+                    />
+                  </Link>
+                ) : (
+                  <Link href="/" className="font-bold text-xs md:text-2xl">
+                    {store.name ? store.name : "My Store"}
+                  </Link>
+                )}
               </div>
 
               <div className="hidden z-40 lg:ml-8 lg:block">
