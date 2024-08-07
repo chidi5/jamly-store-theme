@@ -3,6 +3,7 @@ import { Store } from "@/types";
 import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import NavItems from "./NavItems";
+import Image from "next/image";
 
 const Footer = async ({ store }: { store: Store }) => {
   const categories = await getCategories(store.id);
@@ -12,11 +13,23 @@ const Footer = async ({ store }: { store: Store }) => {
       <MaxWidthWrapper className="mx-auto w-full py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <Link href="/" className="flex items-center">
-              <span className="self-center text-2xl font-semibold whitespace-nowrap">
-                {store.name}
-              </span>
-            </Link>
+            {store.storeLogo ? (
+              <Link href="/">
+                <Image
+                  src={store.storeLogo}
+                  width={120}
+                  height={80}
+                  className="object-cover"
+                  alt={"store logo"}
+                />
+              </Link>
+            ) : (
+              <Link href="/" className="flex items-center">
+                <span className="self-center text-2xl font-semibold whitespace-nowrap">
+                  {store.name}
+                </span>
+              </Link>
+            )}
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-4 sm:grid-cols-3">
             <div>

@@ -1,6 +1,6 @@
 "use server";
-import { Billboard, Category, Customer, Product, Store } from "@/types";
-import { cookies } from "next/headers";
+import { Billboard, Category, Customer, Domain, Product, Store } from "@/types";
+import { cookies, headers } from "next/headers";
 import qs from "query-string";
 
 interface ProductQuery {
@@ -11,6 +11,11 @@ interface ProductQuery {
 
 interface BillboardQuery {
   isBanner: boolean;
+}
+
+export async function getStoreDetails(): Promise<Store> {
+  const storeDetailsHeader = headers().get("x-store-details");
+  return storeDetailsHeader ? JSON.parse(storeDetailsHeader) : null;
 }
 
 export const getStore = async (id: string): Promise<Store> => {
@@ -90,6 +95,14 @@ export const getCustomerById = async (
 ): Promise<Customer> => {
   const URL = `${process.env.NEXT_PUBLIC_API_URL}/${storeId}/customers`;
   const res = await fetch(`${URL}/${id}`, { next: { revalidate: 0 } });
+  return res.json();
+};
+
+export const getDomainByCustomDomain = async (
+  domain: string
+): Promise<Domain> => {
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/stores/domain`;
+  const res = await fetch(`${URL}/${domain}`, { next: { revalidate: 0 } });
   return res.json();
 };
 

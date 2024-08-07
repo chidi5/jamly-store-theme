@@ -1,14 +1,21 @@
 import Billboard from "@/components/billboard";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductList from "@/components/product-list";
-import { getBillboards, getProducts } from "@/lib/queries";
+import { getBillboards, getProducts, getStoreDetails } from "@/lib/queries";
+import { redirect } from "next/navigation";
 
-const Home = async ({ params }: { params: { domain: string } }) => {
-  const products = await getProducts(params.domain, {
+const Home = async () => {
+  const store = await getStoreDetails();
+
+  if (!store) {
+    redirect("/site");
+  }
+
+  const products = await getProducts(store.id, {
     isFeatured: true,
     limit: 10,
   });
-  const billboard = await getBillboards(params.domain, { isBanner: true });
+  const billboard = await getBillboards(store.id, { isBanner: true });
   return (
     <>
       <section className="p-0 pb-10 space-y-10">
