@@ -247,7 +247,7 @@ const CheckOutForm = ({ storeId, customer, store }: CheckOutFormProps) => {
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel>Save details</FormLabel>
+                        <FormLabel>Save detail</FormLabel>
                         <FormDescription>
                           This will save the phone and address as default
                           details
